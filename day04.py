@@ -9,7 +9,8 @@ def main():
     scores = [get_score_card(card) for card in cards]
     asw1 = sum(scores)
     print(f'(Puzzle 1) Sum: {asw1}')
-    asw2 = get_nums_per_card(cards)
+    nums_per_card = get_nums_per_card(cards)
+    asw2 = sum(nums_per_card.values())
     print(f'(Puzzle 2) Num total cards: {asw2}')
 
 
@@ -27,7 +28,7 @@ def get_nums_per_card(cards):
     # add original
     for k in nums_per_card:
         nums_per_card[k] += 1
-    return sum(nums_per_card.values())
+    return nums_per_card
 
 
 def parse_card(card_line):
