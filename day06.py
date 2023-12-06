@@ -1,16 +1,30 @@
+from math import sqrt
+
+
 def main():
     with open('data/day06.txt') as h:
         contents = h.readlines()
     contents = [c.split('\n')[0] for c in contents]
     times, previous_distances = parse_contents_one(contents)
-    num_better_distances = find_better_distances(times, previous_distances)
+    num_better_distances = find_better_distances_naive(times, previous_distances)
     asw1 = prod(num_better_distances)
     print(f'(Puzzle 1) Product of number of record passing: {asw1}')
     times, previous_distances = parse_contents_two(contents)
-    # probably there's more efficient way by finding intercepts of parabola
-    # but this ran fast enough:
     asw2 = find_better_distances(times, previous_distances)[0]
     print(f'(Puzzle 2) Number of record passing: {asw2}')
+
+
+def find_better_distances(times, previous_distances):
+    num_better_distances = []
+    for time, prev_distance in zip(times, previous_distances):
+        base_speed = 1
+        a = -1 * base_speed
+        b = time * base_speed
+        c = -1 * prev_distance
+        root1 = (-b + sqrt(b**2 - 4 * a * c)) / (2 * a)
+        root2 = (-b - sqrt(b**2 - 4 * a * c)) / (2 * a)
+        num_better_distances.append(int(root2) - int(root1))
+    return num_better_distances
 
 
 def parse_contents_two(contents):
@@ -19,7 +33,7 @@ def parse_contents_two(contents):
     return [time], [prev_distance]
 
 
-def find_better_distances(times, previous_distances):
+def find_better_distances_naive(times, previous_distances):
     base_speed = 1
     num_better_distances = []
     for time, prev_distance in zip(times, previous_distances):
