@@ -43,10 +43,8 @@ def total_accepted(state_map):
             if false_lims[0] <= false_lims[1]:
                 ranges = {k: v for k, v in ranges.items()}
                 ranges[variable] = false_lims
-            else:
-                break
-        else:
-            total += dfs(ranges, fallback)
+                
+        total += dfs(ranges, fallback)
         return total
 
     initial_ranges = {letter: (1, 4000) for letter in 'xmas'}
